@@ -1,10 +1,33 @@
 import { Module } from '@nestjs/common';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { ConfigModule } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+
 import { ApiController } from './api/api.controller';
+import { BurgersModule } from './burgers/burgers.module';
+import { Ingredient } from './ingredients/ingredient.entity';
+import { Burger } from './burgers/burger.entity';
+import { IngredientsModule } from './ingredients/ingredients.module';
 
 @Module({
-  imports: [],
+  imports: [
+    TypeOrmModule.forRoot({
+      type: 'mysql',
+      host: 'localhost',
+      port: 3306,
+      username: 'root',
+      password: 'tyange12',
+      database: 'test_burger',
+      entities: [Ingredient, Burger],
+      synchronize: true,
+    }),
+    ConfigModule.forRoot({
+      envFilePath: ['.env.development.local', '.env.development'],
+    }),
+    BurgersModule,
+    IngredientsModule,
+  ],
   controllers: [AppController, ApiController],
   providers: [AppService],
 })
