@@ -2,7 +2,7 @@ import { Burger } from './burger.entity';
 import { Body, Controller, Delete, Get, Patch, Post } from '@nestjs/common';
 import { CreateBurgerDto } from './dto/create-burger.dto';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm/repository/Repository';
+import { Repository } from 'typeorm';
 
 @Controller('burgers')
 export class BurgersController {
