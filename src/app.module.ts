@@ -6,9 +6,10 @@ import { AppService } from './app.service';
 
 import { ApiController } from './api/api.controller';
 import { BurgersModule } from './burgers/burgers.module';
+import { IngredientsModule } from './ingredients/ingredients.module';
 import { Ingredient } from './ingredients/ingredient.entity';
 import { Burger } from './burgers/burger.entity';
-import { IngredientsModule } from './ingredients/ingredients.module';
+import { BurgerIngredient } from './burgers/burger-ingredient.entity';
 
 @Module({
   imports: [
@@ -18,8 +19,8 @@ import { IngredientsModule } from './ingredients/ingredients.module';
       port: 3306,
       username: 'root',
       password: 'tyange12',
-      database: 'test_burger',
-      entities: [Ingredient, Burger],
+      database: 'test_burger2',
+      entities: [Ingredient, Burger, BurgerIngredient],
       synchronize: true,
     }),
     ConfigModule.forRoot({

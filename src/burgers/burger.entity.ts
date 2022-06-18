@@ -1,6 +1,15 @@
-import { Ingredient } from 'src/shared/ingredient.interface';
+import {
+  Column,
+  Entity,
+  JoinTable,
+  ManyToMany,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Ingredient } from 'src/ingredients/ingredient.entity';
+import { BurgerIngredient } from './burger-ingredient.entity';
 
 @Entity()
 export class Burger {
@@ -13,6 +22,17 @@ export class Burger {
   @Column()
   brand: string;
 
-  @Column({ type: 'json' })
-  ingredients: Ingredient[];
+  // @Column({ type: 'json' })
+  // ingredients: Array<{
+  //   ingredient_id: number;
+  //   ingredient_name: string;
+  //   ingredient_amount: number;
+  // }>;
+
+  @OneToMany(
+    () => BurgerIngredient,
+    (burgerIngredient) => burgerIngredient.burgerId,
+    { cascade: true },
+  )
+  ingredients: BurgerIngredient[];
 }

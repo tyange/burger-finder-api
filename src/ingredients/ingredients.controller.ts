@@ -21,7 +21,6 @@ export class IngredientsController {
 
   @Get()
   findAll() {
-    console.log('find all ingredients');
     return this.ingredientsRepository.find();
   }
 
@@ -35,14 +34,13 @@ export class IngredientsController {
     const ingredient = new Ingredient();
     ingredient.name = addIngredientDto.name;
     ingredient.kind = addIngredientDto.kind;
-    ingredient.amount = addIngredientDto.amount;
 
     return this.ingredientsRepository.save(ingredient);
   }
 
   @Delete(':id')
-  deleteIngredient() {
-    console.log('delete ingredient');
+  deleteIngredient(@Param('id') id: string) {
+    return this.ingredientsRepository.delete(id);
   }
 
   @Put(':id')
