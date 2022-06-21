@@ -1,15 +1,5 @@
-import {
-  Column,
-  Entity,
-  JoinColumn,
-  JoinTable,
-  ManyToMany,
-  ManyToOne,
-  OneToMany,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
-import { Ingredient } from 'src/ingredients/ingredient.entity';
 import { BurgerIngredient } from './burger-ingredient.entity';
 
 @Entity()
