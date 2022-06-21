@@ -26,7 +26,9 @@ export class IngredientsController {
 
   @Get(':id')
   findOne(@Param('id') id: string): Promise<Ingredient> {
-    return this.ingredientsRepository.findOne(id);
+    return this.ingredientsRepository.findOne(id, {
+      relations: ['withBurgers'],
+    });
   }
 
   @Post()

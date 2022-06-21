@@ -3,8 +3,6 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
-  OneToOne,
-  PrimaryColumn,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
@@ -22,9 +20,17 @@ export class BurgerIngredient {
   @Column({ name: 'ingredient_id' })
   ingredientId: number;
 
-  @ManyToOne(() => Burger, (burger) => burger.id, { onDelete: 'CASCADE' })
-  @JoinColumn({ name: 'burger_id' })
+  @ManyToOne(() => Burger, (burger) => burger.id, {
+    onDelete: 'CASCADE',
+  })
+  @JoinColumn({ name: 'burger_id', referencedColumnName: 'id' })
   burger: Burger;
+
+  @ManyToOne(() => Ingredient, (ingredient) => ingredient.id, {
+    onDelete: 'CASCADE',
+  })
+  @JoinColumn({ name: 'ingredient_id' })
+  ingredient: Ingredient;
 
   @Column()
   amount: number;

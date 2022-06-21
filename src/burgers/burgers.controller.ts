@@ -31,8 +31,10 @@ export class BurgersController {
   }
 
   @Get(':id')
-  findBurger() {
-    console.log('find burger');
+  findBurger(@Param('id') paramBgId: number) {
+    return this.burgerRepository.findOne(paramBgId, {
+      relations: ['ingredients'],
+    });
   }
 
   @Post()
@@ -61,8 +63,9 @@ export class BurgersController {
   }
 
   @Delete(':id')
-  deleteBurger() {
+  deleteBurger(@Param('id') paramBgId: string) {
     console.log('delete burger');
+    return this.burgerRepository.delete(paramBgId);
   }
 
   @Patch(':id')

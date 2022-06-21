@@ -1,6 +1,7 @@
 import {
   Column,
   Entity,
+  JoinColumn,
   JoinTable,
   ManyToMany,
   ManyToOne,
@@ -22,17 +23,9 @@ export class Burger {
   @Column()
   brand: string;
 
-  // @Column({ type: 'json' })
-  // ingredients: Array<{
-  //   ingredient_id: number;
-  //   ingredient_name: string;
-  //   ingredient_amount: number;
-  // }>;
-
   @OneToMany(
     () => BurgerIngredient,
-    (burgerIngredient) => burgerIngredient.burgerId,
-    { cascade: true },
+    (burgerIngredient) => burgerIngredient.burger,
   )
   ingredients: BurgerIngredient[];
 }

@@ -1,6 +1,5 @@
 import { BurgerIngredient } from './../burgers/burger-ingredient.entity';
-import { Burger } from './../burgers/burger.entity';
-import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class Ingredient {
@@ -12,4 +11,10 @@ export class Ingredient {
 
   @Column()
   kind: string;
+
+  @OneToMany(
+    () => BurgerIngredient,
+    (burgerIngredient) => burgerIngredient.ingredient,
+  )
+  withBurgers: BurgerIngredient[];
 }
