@@ -19,7 +19,7 @@ import { BurgerIngredient } from './burgers/burger-ingredient.entity';
       port: 3306,
       username: 'root',
       password: 'tyange12',
-      database: 'test_burger2',
+      database: 'test_burger3',
       entities: [Ingredient, Burger, BurgerIngredient],
       synchronize: true,
     }),
