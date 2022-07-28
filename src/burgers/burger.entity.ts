@@ -13,9 +13,16 @@ export class Burger {
   @Column()
   brand: string;
 
+  @Column({ nullable: true })
+  isVegan: boolean;
+
+  @Column({ nullable: true })
+  imageUrl: string;
+
   @OneToMany(
     () => BurgerIngredient,
     (burgerIngredient) => burgerIngredient.burger,
+    { nullable: true, eager: true },
   )
   ingredients: BurgerIngredient[];
 }

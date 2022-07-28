@@ -55,8 +55,9 @@ export class BurgersController {
     addIngredientDto.ingredients.forEach((ing) => {
       const burgerIng = new BurgerIngredient();
       burgerIng.burgerId = id;
-      burgerIng.ingredientId = ing.ingredient_id;
-      burgerIng.amount = ing.ingredient_amount;
+      burgerIng.ingredientId = ing.id;
+      burgerIng.ingredientName = ing.name;
+      burgerIng.amount = ing.amount;
 
       this.burgerIngRepository.save(burgerIng);
     });
@@ -74,20 +75,20 @@ export class BurgersController {
     @Body() updateBurgerDto: UpdateBurgerDto,
   ) {
     // parameter로 전달된 burger id에 따른
-    // 저장된 버거 데이터를 찾아서 burger 변수에 저장하고 입력 받은 버거 이름와 브랜드명으로 변경.
+    // 저장된 버거 데이터를 찾아서 burger 변수에 저장하고 입력 받은 버거 이름과 브랜드명으로 변경.
     const burger = await this.burgerRepository.findOne(paramBgId);
     burger.name = updateBurgerDto.name;
     burger.brand = updateBurgerDto.brand;
 
-    // parameter로 전달된 burger id로 저장된 버거 데이터를 불러오기.
+    // 입력 받은 재료 데이터를 변수에 저장.
+    const receivedBurgerIngs = updateBurgerDto.ingredients;
+
+    // parameter로 전달된 burger id로 저장된 버거 재료 데이터를 불러오기.
     const storedBurgerIngs = await this.burgerIngRepository.find({
       where: {
         burgerId: paramBgId,
       },
     });
-
-    // 입력 받은 재료 데이터를 변수에 저장.
-    const receivedBurgerIngs = updateBurgerDto.ingredients;
 
     // 저장된 버거 데이터가 없고, 입력된 버거 데이터도 없을 때.
     if (
@@ -98,7 +99,7 @@ export class BurgersController {
       return this.burgerRepository.update(paramBgId, burger);
     }
 
-    // 아래는 updating method들.
+    // 아래는 버거 재료 업데이트 과정.
 
     // 입력 받은 데이터에서 새로운 재료 데이터가 있을 경우 삽입.
     const insertNewIngs = (
@@ -150,7 +151,7 @@ export class BurgersController {
 
     // 저장된 버거 데이터가 존재하고, 입력된 버거 데이터도 존재할 때.
     if (storedBurgerIngs.length > 0 && receivedBurgerIngs.length > 0) {
-      // 입력 받은 데이터와 저장되 버거 데이터이 교집합을 이루는 데이터를 추출한다.
+      // 입력 받은 데이터와 저장된 버거 데이터의 교집합을 이루는 데이터를 추출한다.
       const intersectionIngs = receivedBurgerIngs.filter((rcvIng) =>
         storedBurgerIngs.some(
           (storedIng) => rcvIng.ingredient_id === storedIng.ingredientId,
