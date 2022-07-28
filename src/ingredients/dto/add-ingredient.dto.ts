@@ -1,4 +1,4 @@
-export class IngredientDto {
+export class AddIngredientDto {
   name: string;
   kind: string;
 }

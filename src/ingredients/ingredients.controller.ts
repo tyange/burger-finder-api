@@ -10,7 +10,8 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
-import { IngredientDto } from './dto/add-ingredient.dto';
+import { AddIngredientDto } from './dto/add-ingredient.dto';
+import { UpdateIngredientDto } from './dto/update-ingredient.dto';
 import { Ingredient } from './ingredient.entity';
 
 @Controller('ingredients')
@@ -33,7 +34,7 @@ export class IngredientsController {
   }
 
   @Post()
-  add(@Body() addIngredientDto: IngredientDto) {
+  add(@Body() addIngredientDto: AddIngredientDto) {
     const ingredient = new Ingredient();
     ingredient.name = addIngredientDto.name;
     ingredient.kind = addIngredientDto.kind;
@@ -49,8 +50,11 @@ export class IngredientsController {
   @Put(':id')
   updateIngredient(
     @Param('id') id: string,
-    @Body() updatedIngredient: IngredientDto,
+    @Body() updatedIngredient: UpdateIngredientDto,
   ) {
-    return this.ingredientsRepository.update(id, updatedIngredient);
+    return this.ingredientsRepository.update(id, {
+      name: updatedIngredient.name,
+      kind: updatedIngredient.kind,
+    });
   }
 }
